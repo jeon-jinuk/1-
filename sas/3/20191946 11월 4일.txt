@@ -1,0 +1,224 @@
+data salary; 자료불러오는 수식
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+run;
+
+
+proc print;
+run;
+
+proc means data=salary; 수 평균 표준편차 최솟값 최댓값
+var income;
+run;
+
+data salary;
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+run;
+
+
+proc print;
+run;
+
+proc means data=salary; 사진 1번
+run;
+
+
+
+data salary;  사진2번
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income = . then delete;
+run;
+
+
+proc print;
+run;
+
+proc means data=salary maxdec=2;
+var age income;    이것만 나오게한다
+run;
+
+
+
+data salary; 사진3번
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income = . then delete;
+run;
+
+
+proc print;
+run;
+
+proc sort data=salary out=salary1;
+by city;
+run;
+
+
+proc means data=salary maxdec=2;
+var age income;
+by city; 시티를 의한것 없애면 전체 평균이 나옴
+run;
+
+
+
+
+data salary; 사진4번
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income = . then delete;
+run;
+
+
+proc print data=salary1; salary1 한게나옴 사진처럼 city 순으로 나옴
+run;
+
+proc sort data=salary out=salary1;
+by city;
+run;
+
+
+
+proc means data=salary maxdec=2;
+var age income;
+class gender; 남자와 여자의 인컴에대한 게 나옴
+run;
+
+data salary; 
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income = . then delete;
+run;
+
+
+proc print data=salary1;
+run;
+
+proc sort data=salary out=salary1;
+by city;
+run;
+
+
+
+proc means data=salary maxdec=2;
+var age income;
+class gender;
+run;
+
+proc print data=salary; obs를 없애는 방법
+id city;
+run;
+
+
+data salary; 
+infile 'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+label city= 'the name of the city' ; label붙이면 시티 대신 지정한 이름이 나옴
+label gender= 'the gender of the person'  ;
+if income = . then delete; 
+run;
+
+
+proc print data=salary1; 
+run;
+
+proc sort data=salary out=salary1; 사진5번 
+by city; city가 1에 속하는게 나옴
+run;
+
+
+
+proc means data=salary maxdec=2;
+var age income;
+class gender;
+run;
+
+proc print data=salary label; 라벨 붙인게 나옴
+id city;
+run;
+
+
+proc format; 위에거 추가하면 city에 1은서울 2는 부산 3은 광주가나옴
+value cityfmt 1=' 서울' 2='부산' 3='광주';
+run;
+
+proc print data=salary; 
+format city cityfmt.; 시티가 나오게함
+run;
+
+proc print data=salary;
+format city cityfmt.;
+where gender in (1); 이거를 추가하면 gender가 1인것만 나옴
+run;
+
+proc means data=salary; 
+where city in (1);
+run;
+
+proc means data=salary mean std var cv ; 사진6
+var age income;
+run;
+
+proc means data=salary mean std var cv ; 사진7번
+var income;
+output out=result mean=imean std=istd var=ivar cv=icv; 
+run;
+
+proc print data=result;
+run;
+
+
+proc means data=salary mean std var cv ; 사진8번
+var income;
+class gender;
+output out=result mean=imean std=istd var=ivar cv=icv;
+run;
+
+proc print data=result;
+run;
+
+proc means data=salary mean std var cv ; 핸드폰에 찍음
+var income;
+class gender;
+output out=result mean=imean std=istd var=ivar cv=icv;
+run;
+data result;
+set resuit;
+keep imean istd ivar icv;
+run;
+
+proc print data=resuit;
+run;
+
+
+data ex; 평균 2.1 나옴 식
+input x@@;
+cards;
+1 1 1 1 2 2 2 3 4
+run;
+
+proc means mean;
+var x;
+run;
+
+data ex2; 평균과 분산구하는식 
+input x fre;
+cards;
+1 40
+2 30
+3 10
+4 20
+run;
+
+proc means data=ex2 mean;
+freq fre; 빈도구하는식 var x;    확률구하는식
+var x;                      weight prob;
+run;                           
+
+
+
+
+
+
+

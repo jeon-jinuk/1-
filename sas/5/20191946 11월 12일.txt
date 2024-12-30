@@ -1,0 +1,37 @@
+libname cho 'C:\Users\admin\Desktop\cdh'; 
+data cho.income;
+infile 'C:\Down\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run;
+
+
+data ex;
+do id=1 to 44;
+output;
+end;
+run;
+
+data idincome;
+merge ex cho. income;
+run;
+
+proc sort data=idincome out=sidincome;
+by desending income;
+run;
+
+proc print;
+run;
+
+proc rank data=idincome out=ridincome descending ties= low; 
+var income;
+ranks rincome;
+run;
+
+proc print data=ridincome;
+run;
+
+data top20;
+set ridincome;
+if rincome <=20;
+run;

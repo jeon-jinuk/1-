@@ -1,0 +1,61 @@
+a
+data ex;
+infile 'C:\Users\HYUNCOM\Desktop\APb_1.txt' firstobs=2;
+input id x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11;
+allx=x4+x3;
+x12= x4/allx;
+run;
+
+proc print;
+run;
+
+proc means n 
+var x4;
+class x1;
+run;
+
+b
+proc means data=ex; 
+var x12;
+class x1;
+run;
+
+c
+proc means mean;
+var x11;
+class x2;
+run;
+
+d
+proc means t prt;
+var x11;
+run;
+
+
+data ex2;
+input id fir sec;
+d=fir-sec;
+cards;
+1 70 115
+2 84 148 
+3 88 176
+4 110 191
+5 105 158
+6 100 178
+7 110 179
+8 67 140
+9 79  161
+10 86 157
+run  ;
+
+proc print;
+run;
+
+proc means mean stderr
+var fir;
+var sec;
+run;
+
+proc means t prt;
+var d;
+run;

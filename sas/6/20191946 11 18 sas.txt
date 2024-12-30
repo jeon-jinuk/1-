@@ -1,0 +1,137 @@
+data toeic; 사진 1
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+run;
+
+proc print;
+run;
+
+proc freq;      
+table college;
+run; 
+
+proc chart; 위에꺼대신 이거 넣으면 막대 그래프가나옴
+vbar college;  /discrete이거치면 정수로만 나옴 원래는 그래프 가로에 0.5대도 있지만 정수로만 정렬 type=pct;이거치면 백불률로 나옴
+block을치면 사진 2
+hbar를 치면 사진 3
+run;
+
+
+data toeic; 사진 4
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+run;
+
+proc print;
+run;
+
+proc chart;
+hbar college/discrete type=pct;
+run;
+
+proc freq;      
+table college;
+run;
+
+proc means; 여기에 mean을 추가하면 원하는것만 나온다
+var rctotal;
+class college;
+run;
+
+data toeic; 사진 5
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+if grade=5. then delete;
+run;
+
+proc print;
+run;
+
+proc chart;            
+vbar college/discrete  type=pct ;
+run;
+
+(proc chart;
+vbar college/discrete  type=freq ;
+where grade=1; 이게 있으면 1학년만나온다
+run;) 1학년만 나오는 공식 
+
+
+(proc chart;
+vbar college/discrete  type=freq  group= grade;
+run;) 사진6 
+
+(proc chart;
+vbar college/discrete  type=freq  subgroup= grade;
+run;) 사진 7
+
+(proc chart;
+hbar grade/discrete  type=freq;
+run;) 사진 8
+
+proc freq;      
+table college;
+run;
+
+proc means mean;
+var rctotal;
+class college;
+run;
+
+proc freq;
+tables college*grade;
+run;
+
+
+proc chart;  사진9                       크기
+hbar rctotal/type=mean levels=30 width=3;  
+run;
+
+proc chart; 사진 10
+vbar x/symbol='r';
+run;
+
+data toeic; 사진 11
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+if grade=5 then delete;
+run;
+
+proc means data=toeic maxdex=2  mean min max std var stderr;
+class college; ;
+var rctotal;
+run;
+
+data toeic; 사진12 
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+if grade=5 then delete;
+run;
+
+proc ttest data=toeic h0=180;
+ var rctotal;
+run;
+
+proc means t prt; 사진 13
+var rctotal1;
+run;
+
+data ex; 사진 14
+infile 'C:\Down\CH12_1.txt' firstobs=2;
+input id bak aak  bmom amom atuk btuk b100 a100;
+ ak=bak-aak;
+run;
+
+proc means t prt ;
+var ak;
+run;
+
+proc ttest;
+ paired bak*aak;
+ run;
+
+
+
+
+
+

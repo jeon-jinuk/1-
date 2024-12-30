@@ -1,0 +1,25 @@
+libname cho 'C:\Users\admin\Desktop';
+data cho.exam ;
+infile 'C:\Down\CH17_1.txt ' firstobs=2;
+input id age gender study tv newspaper;
+run;
+
+proc print;
+run;
+
+proc means ;
+var tv;
+class study;
+where study in (1,2);
+run;
+
+proc ttest;
+var tv;
+class study;
+where study in (2,3);
+run;
+
+proc anova;
+class study;
+model tv=study;
+run;

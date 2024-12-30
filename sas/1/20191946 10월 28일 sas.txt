@@ -1,0 +1,109 @@
+data toeic; 자료를 부를때
+infile 'C:\Users\admin\Desktop\APb_2.txt'   firstobs=2;
+input id stay age risk bed school region census nurse;
+run;
+
+
+data toeic; 결과 따로 평균낼때
+infile 'C:\Users\admin\Desktop\APb_2.txt'   firstobs=2;
+input id stay age risk bed school region census nurse;
+run;
+
+proc sort data=toeic out=stoeic;
+by school;
+run;
+proc print data=stoeic;
+run;
+
+proc means data=stoeic means;
+var age;
+by school;
+run;
+
+data toeic; sort없이 평균이 나온다
+infile 'C:\Users\admin\Desktop\APb_2.txt'   firstobs=2;
+input id stay age risk bed school region census nurse;
+run;
+
+proc print data=stoeic;
+run;
+
+proc means data=stoeic mean; +maxdec=@하면 평균 소수점 제한이됨
+var age;
+class school;
+run;
+
+data toeic;  변수를 앞에 보내는식
+infile 'C:\Users\admin\Desktop\APb_2.txt'   firstobs=2;
+input id stay age risk bed school region census nurse;
+run;
+
+proc sort data=toeic out=stoeic;
+by school;
+run;
+
+proc print data=toeic;
+id(앞으로 보내는 수식) age;
+run;
+
+data toeic; 자료=이것을 의미한다로 label을 사용한다
+infile 'C:\Users\admin\Desktop\APb_2.txt'   firstobs=2;
+input id stay age risk bed school region census nurse;
+label bed='number of bed' census='number of patient';
+run;
+
+proc print data=toeic label;
+run;
+
+data toeic;  스쿨을 부속또는 비부속으로 지정하는 식
+infile 'C:\Users\admin\Desktop\APb_2.txt'   firstobs=2;
+input id stay age risk bed school region census nurse;
+label bed='number of bed' census='number of patient';
+run;
+
+
+proc format; 
+value sfmt(자기마음대로 이름부여) 1='부속' 2='비부속';
+run;
+
+proc print data=toeic label;
+format school sfmt.;
+run;
+
+
+data toeic; value (내마음대로 지정) 숫자 =@이다식
+infile 'C:\Users\admin\Desktop\APa_1.txt'   firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete; income에서 .을 지운다
+run;
+
+proc format;
+value gfmt 1='male' 2='female';
+value rfmt 1='기독교' 2='천주교' 3='불교' 4='기타';
+run;
+
+proc print data=salary;
+format gender gfmt.;
+format religion rfmt.;
+run;
+
+data salary;  amean imean 평균구하고 둘만 나타낸것
+infile 'C:\Users\admin\Desktop\APa_1.txt'   firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run;
+
+proc means data=salary mean;
+var  age income;
+output out=result mean=amean imean;
+run;
+
+
+data result;
+set result;
+keep amean imean;
+run;
+proc print data=result;
+run;
+
+

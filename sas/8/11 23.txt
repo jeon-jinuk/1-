@@ -1,0 +1,51 @@
+data salary;
+infile 'C:\Down\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+
+proc print;
+run;
+
+proc means;
+var income;
+class city;
+run;
+
+proc means maxdec=2;
+var income;
+class city;
+run;
+
+data exam1;
+do disc=1 to 3;
+do tech 1 to 3;
+input time@;
+ output;
+ end;
+ end;
+cards;
+62 51 59
+57 61 58
+59 55 47
+48 57 65
+45 58 63
+53 58 56
+63 45 55
+39 70 70
+67 50 51
+57 50 52
+54 66 53
+66 69 44
+69 39 70
+44 51 60
+47 49 50
+run;
+proc print;
+run;
+
+proc anova;
+ class disc tech;
+model time=disc tech disc*tech;
+means disc*tech/duncan;
+run;

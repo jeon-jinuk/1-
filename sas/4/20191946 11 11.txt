@@ -1,0 +1,170 @@
+Libname cho 'C:\Users\admin\Desktop\cdh'; 라이브러리 만드는것
+data cho.exam;
+infile 'C:\Down\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete; .지우는것
+run; 
+option pagesize=20; 결과를 한화면에 20줄씩 보여주는것 option number=0;출력에뜨는 번호를 지운다
+proc print;
+run;
+
+Libname cho 'C:\Users\admin\Desktop\cdh';
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run; 
+option data=0;
+option number=0;
+title1 ' this is an example'; 타이틀을 다는 수식 뒤에수는 몇번쨰에 쓸건지 정하는것
+title3 'this is an interasting';       footnote 'this is interesting'; 출력창의 마지막에 뜨게하는것
+
+proc print;
+run;
+
+Libname cho 'C:\Users\admin\Desktop\cdh';
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run; 
+options pagesize=20; 
+proc print;
+var gender income; gender와 income만 보여준다
+run;
+
+
+Libname cho 'C:\Users\admin\Desktop\cdh';
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run; 
+options pagesize=20;
+proc print;
+by city; city에 따라 분리해준다
+run;
+
+Libname cho 'C:\Users\admin\Desktop\cdh';
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run; 
+options pagesize=20;
+proc print;
+sum income; income를 합쳐준다
+run;
+
+
+Libname cho 'C:\Users\admin\Desktop\cdh'; 사진1번
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run; 
+options pagesize=20;
+proc print;
+by city;
+sum income;
+sumby city;
+run;
+
+Libname cho 'C:\Users\admin\Desktop\cdh';
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+run; 
+options pagesize=58;
+option data;
+option number;
+proc print double; 두칸 띄워준다
+run;
+
+Libname cho 'C:\Users\admin\Desktop\cdh';
+data cho.exam;
+infile 'C:\Users\admin\Desktop\수익.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income=. then delete;
+label city='the name of city';
+run; 
+options pagesize=58;
+option data;
+option number;
+
+proc format;
+value gfmt 1='남자'  2='여자';  1은 남자로 2는 여자로 바꿔준다
+run;
+
+proc print double label noobs;
+format gender gfmt.;
+run;
+
+
+data toeic; 사진2번
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+total=lctotal+rctotal;
+run;
+
+proc print;
+var id total;
+run;
+
+
+
+
+data toeic;
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+total=lctotal+rctotal;
+run;
+
+
+proc sort data=toeic out=toeic;
+by descending total;
+run;
+
+proc print data=stoeic;
+where id=100; 100등을 아는 수식
+run;
+
+data toeic; 사진3번
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+total=lctotal+rctotal;
+run;
+
+
+proc sort data=toeic out=toeic;
+by descending total;
+run;
+
+proc rank data=toeic out=rtoeic descending; 
+var total;
+ranks rtotal;
+run;
+
+proc print data=rtoeic double;
+run;
+
+
+data toeic;
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+total=lctotal+rctotal;
+run;
+
+
+proc sort data=toeic out=toeic;
+by descending total;
+run;
+
+proc rank data=toeic out=rtoeic descending ties=low; 동점처리를 한다
+var total lctotal;
+ranks rtotal rlctotal; 순위를 매긴다
+run;
+
+proc print data=rtoeic double;
+run;

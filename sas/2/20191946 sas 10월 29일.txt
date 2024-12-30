@@ -1,0 +1,132 @@
+data salary;
+infile'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+                               평균  분산 표준편차
+proc means data=salary mean var std;  religion의 관측수 평균 분산 표준편차 구하는식
+var income;
+class religion;
+run;
+
+
+data salary;
+infile'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+
+proc means data=salary mean var std; 1번사진
+var income;
+class religion;
+output out=inres mean=ime var=iva std=ist;
+run;
+
+proc print data=inres;
+run;
+
+
+data salary; 2번사진   icov=(ist/ime)=100;
+infile'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+
+proc means data=salary mean var std;
+var income;
+class religion;
+output out=inres mean=ime var=iva std=ist;
+run;
+
+proc print data=inres;
+run;
+
+
+data res;                                           
+keep ime iva ist;                           표준편차 /평균
+set inres;                            icov=(ist/ime)=100;을쓰려면keep~를set자리를 바꾸고 할것
+run;
+
+proc print data=res;
+run;
+
+
+data salary; 시티가 1만나오게하는 방법
+infile'C:\Users\admin\Desktop\APa_1.txt' firstobs=2; 
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+
+proc print;
+where city in(1);
+run;
+
+
+data salary; 사진3번 
+infile'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+
+proc means;
+var income;
+where city in (1);
+run;
+
+
+
+data salary; 사진4번 
+infile'C:\Users\admin\Desktop\APa_1.txt' firstobs=2;
+input city age religion educatn occupatn gender income;
+if income= . then delete;
+run;
+
+proc means;
+var income;
+where city in (1);
+run;
+                 소수점 제한
+proc means maxdec=2;
+var income;
+class city;
+run;
+
+
+data exam; 사진5번
+input x num prob;
+cards;
+1 2 0.2
+2 3 0.5
+3 4 0.3
+run;
+
+proc print;
+run;
+
+
+data exam; 사진6번
+input x num prob;
+cards;
+1 2 0.2
+2 3 0.5
+3 4 0.3
+run;
+
+proc means;
+var x;
+freq num;
+run;
+
+
+data exam; 사진7번
+input x num prob;
+cards;
+1 2 0.2
+2 3 0.5
+3 4 0.3
+run;
+
+proc means;
+var x;
+weight prob;
+run;

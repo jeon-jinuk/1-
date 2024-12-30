@@ -1,0 +1,82 @@
+data exam1;
+input time@@;
+x=time-10;
+cards;
+8.9 11.9 11.3 12.5 8.7 12.1 9.6 9.9 11.9 12.5
+run;
+proc print;
+run;
+
+proc means mean var std;
+var time;
+run;
+
+proc means t prt;
+var x;
+run;
+
+
+data exam2;
+infile 'C:\Down\CH12_1.txt' firstobs=2;
+input id bak aak  bmom amom atuk btuk b100 a100;
+dmom=amom-bmom;
+run;
+proc means data=exam2 t prt;
+var dmom;
+run;
+
+proc ttest data=exam2;
+paired amom*bmom;
+run;
+
+data exam3;
+infile 'C:\Down\CH17_1.txt' firstobs=2;
+input id age gender study tv newspaper;
+run;
+
+proc prnt;
+run;
+
+proc means data=exam3 mean var stderr;
+class gender;
+var tv;
+run;
+
+proc ttest;
+class gender;
+var tv;
+run;
+
+-----------------------------------------------------------------------
+proc ttest data=exam3; 253페이지
+class study;
+var tv;
+where study in (2,3);
+run;
+
+proc anova data=exam3;
+class study;
+model tv=study;
+means study/duncan; 차이가 있으면 알아보는 수식 study에따라 duncan한다
+run;
+
+-------------------------------------------------------------------------------------
+data exam4;  p177
+infile 'C:\Down\APb_2.txt' firstobs=2;
+input id stay age risk bed school region census nurse;
+run;
+
+proc chart data=exam4;
+hbar region/sumvar=nurse type=sum discrete;
+run;
+
+data exam5; 
+infile 'C:\Down\APb_3.txt' firstobs=2;
+input ID COLLEGE GRADE LC1 LC2 LC3 LC4 LCTOTAL RC1 RC2 RC3 RCTOTAL;
+lc=LC1+ LC2+ LC3+ LC4; 
+run;
+
+proc chart data=exam5;
+hbar college/sumvar=lc type=mean discrete;
+run;
+
