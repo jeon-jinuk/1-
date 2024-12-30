@@ -1,0 +1,95 @@
+a
+data ex;
+infile 'C:\Users\HYUNCOM\Desktop\APb_1.txt' firstobs=2;
+input id x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11;
+allx=x4+x3;
+x12= x4/allx;
+run;
+
+proc print;
+run;
+
+proc means n 
+var x4;
+class x1;
+run;
+
+b
+proc means data=ex; 
+var x12;
+class x1;
+run;
+
+c
+proc means mean;
+var x11;
+class x2;
+run;
+
+d
+proc means mean;
+var x11;
+run;
+
+
+data ex2;
+input id bak aak  bmom amom atuk btuk b100 a100;
+cards;
+1 43 41 35 41 25 29 14.5 14.5
+2 42 41 40 44 25 29 13.4 13.4
+3 52 50 36 41 22 23 13.0 13.5
+4 53 52 38 42 10 15 14.5 13.9
+5 44 40 36 42 15 19 14.2 13.9
+6 48 47 35 42 24 26 13.6 13.6
+7 58 56 34 36 17 18 13.9 13.9
+8 50 50 33 35 17 20 13.2 13.1
+9 48 50 39 45 21 25 14.2 13.8
+10 56 48 37 37 31 35 13.4 13.7
+11 43 41 33 37 15 22 14.8 14.9
+run;
+
+proc print;
+run;
+
+proc means mean stderr;
+var b100;
+var a100;
+run;
+
+proc means t prt;
+var b100;
+class bak;
+run;
+
+proc means t prt;
+var a100;
+class aak;
+run;
+
+data ex2;
+input id  abpm bbpm;
+cbpm = bbpm - abpm
+cards;
+1 70 115
+2 84 148
+3 55 176
+4 110 191
+5 105 158
+6 100 178
+7 110 179
+8 67 140
+9 79 161
+10 86 157
+run ;
+
+proc means mean stderr
+var abpm;
+run;
+
+proc means mean stderr
+var bbpm;
+run;
+
+proc means t prt;
+var cbpm;
+run;

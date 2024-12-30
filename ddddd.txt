@@ -1,0 +1,56 @@
+proc format;
+value schoolfmt 1='부속' 2='비부속' ;
+run;
+
+proc freq data=example.sas;
+table school;
+format school schoolfmt;
+run;
+
+proc means;
+var income;
+class city;
+output out=inmean mean=average std=stdev; /* means 결과에서 mean과 std를 average와 stdev라는 이름으로 저장*/
+run;
+
+data result1;
+set inmean;
+cv=(stdev/average)*100;
+keep city average stdev cv;
+run;
+
+data result1;
+set inmean;
+if city=. then delete;
+run;
+
+
+
+proc means data=income;
+var income;
+where city in (1,2); /* city가 1,2인 income만 구하라*/
+run;
+
+data exx;
+input x fre@@;
+cards;
+1 21 2 25 3 27
+run;
+
+proc means;
+var x;
+freq fre; /* x의 빈도가 fre다 */
+run;
+
+data exx;
+input x prob@@;
+cards;
+1 0.1
+2 0.2
+3 0.7
+run;
+
+proc means;
+var x;
+weight prob;
+run;

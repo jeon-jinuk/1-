@@ -1,0 +1,44 @@
+n <- 22
+res <- 1
+for (i in 1:(n-1)){
+  res <- res*(365-i)/365
+}
+res
+
+y <- 1
+for(n in 2:30){
+  res <- 1
+  for (i in 1:(n-1)){
+    res <- res*(365-i)/365
+  }
+  y[n] <- res
+}
+y
+plot(y)
+abline(a=0.5,b=0)
+
+n <- 20
+rep <- 1000
+s <- 0
+for (i in 1:rep){
+  x <- sample(1:365,n,replace=T)
+  y <- unique(x)
+  if (length(x)==length(y)) s <- s+1
+}
+s/rep
+
+x <- c(3,2,1,3)
+y <- unique(x) #중복되는것을 버리고 가져와라
+y
+
+
+choose(10,2)
+combination(10,2)
+install.packages("gtools")
+library(gtools)
+permutations(10,2)
+prod(10,2)
+pbinom(0,10,0.5)
+pbinom(10,10,0.5)
+dbinom(10,10,0.5)
+pbinom(7,10,0.5)-pbinom(3,10,0.5)

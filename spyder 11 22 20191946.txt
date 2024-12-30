@@ -1,0 +1,85 @@
+A=[70,75,80,85,90,78,82,79,95]
+#
+for i in A:
+    print(A)
+    
+#합과 평균점수 구하기
+total =0
+for i in A:
+    total=total+1
+avg=total/len(A)
+print('A학급의 국어점수 평균='.avg)
+
+#[0,19]구간의 정수 구하기
+for i in range(20):
+    print(i)
+
+#[0,19]구간의 정수의 합 구하기
+total=0
+for i in range(20):
+    total=total+1
+print('([0,19]구간의 정수의 합=',total)
+
+#[1,20]구간의 정수중 5의 배수 & 5의 배수의 합 구하기
+total=0
+for i in range(1,21):
+    if i%5==0:
+        print(i)
+        total=total+1
+print('[1,20]내에 있는 5의 배수의 합=',total)
+
+#[1,100]구간의 정수 중 3과7의 공배수(21,42,63,84)구하기
+for i in range(1,101):
+    if i%3==0 and i%7==0:
+        print(i)
+
+#3과 7의 최소공배수(21)
+for i in range(1,100):
+    if i%3==0 and i%7==0:
+        print(i)
+        break
+    
+while문(1)
+#[0,19]구간의 정수
+i=0
+while i<20: # == i<=19
+    print(i)
+    i=i+1
+
+for i in range(20):
+    print(i)
+
+#18과 45의 최소공배수 구하기
+i=1
+while True:
+    if i%18==0 and i%45==0:
+        print(i)
+        break
+    i=i+1
+
+#두입력값의 합을 구하는 합수
+def add(a,b):
+    return a+b
+add(7,9) #합수호출, 7.9=인수: 함수를 호출시 입력삾
+out=add(7,9) #함수의 결과값을 out이라는 변수에 저장
+print('결과=',out)
+
+(4)함수의 입력값& 결과값(반환값)이 없는 함수
+def Hi():
+    print('Hello!')
+Hi()
+z2=Hi()
+print('결과=',z2) #None
+
+(5)매개변수에 입력 초기값을 미리 설정하기
+def add(a,b=1):
+    return a+b
+out1=add(7,3)
+print(out1,out2)
+
+(6)함수의 복수 결과값
+def add_mul(a,b):
+    return a+b, a*b
+y=add_mul(7,3)
+print(y)#=print(y[0], y[1])
+type(y) # 자료형 =tuple
